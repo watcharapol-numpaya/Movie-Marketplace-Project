@@ -1,4 +1,4 @@
-# Movie info  Project
+# Movie Marketplace Project
 
 ## Prerequisites
 
