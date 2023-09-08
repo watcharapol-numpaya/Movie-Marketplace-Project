@@ -1,9 +1,42 @@
-# React + Vite
+# Movie info  Project
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Prerequisites
 
-Currently, two official plugins are available:
+- [Node.js](https://nodejs.org/)
+- [npm](https://www.npmjs.com/) or [Yarn](https://yarnpkg.com/)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
-"# movie-marketplace-project" 
+## Getting Started
+
+1. Clone this repository to your local machine:
+
+   ```bash
+   git clone git@github.com:watcharapol-numpaya/movie-marketplace-project.git
+   ```
+
+2. Change into the project directory:
+
+   ```bash
+   cd movie-marketplace-project
+   ```
+
+3. Install the project dependencies using npm or Yarn:
+
+   ```bash
+   # Using npm
+   npm install
+
+   # Using Yarn
+   yarn install
+   ```
+
+4. Start the development server:
+
+   ```bash
+   # Using npm
+   npm run dev
+
+   # Using Yarn
+   yarn dev
+   ```
+
+5. Open your web browser and go to `http://localhost:5174/` to see your React application running.
