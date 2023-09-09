@@ -4,6 +4,7 @@ import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import HomeIcon from "@mui/icons-material/Home";
 import SupervisorAccountIcon from "@mui/icons-material/SupervisorAccount";
 import { Link } from "react-router-dom";
+import SearchBar from "./SearchBar";
 
 const Navbar = () => {
   return (
@@ -16,12 +17,7 @@ const Navbar = () => {
             </p>
           </div>
           <div className="w-8/12 h-14   flex justify-center items-center  ">
-            <div className="relative flex shadow-ทก rounded-full overflow-hidden">
-              <input className="h-10 w-80   outline-none p-4 pr-12    " />
-              <div className="h-10 w-12   absolute right-0 rounded-r-full flex justify-center items-center    ">
-                <SearchIcon className=" " />
-              </div>
-            </div>
+            <SearchBar/>
           </div>
           <div className="w-2/12 h-14">
             <ul className="flex w-full h-full bg-red items-center cursor-pointer ">

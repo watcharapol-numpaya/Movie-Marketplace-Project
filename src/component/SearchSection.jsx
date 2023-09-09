@@ -19,7 +19,6 @@ const  SearchSection =()=> {
     dispatch(setKeyword(e.target.value));
     dispatch(getMovieByKeyword(e.target.value.trim()));
     setShowSearchCard(true); // Show the search card when typing in the input box
-
  
   };
 
