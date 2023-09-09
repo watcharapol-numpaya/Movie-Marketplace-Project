@@ -16,7 +16,9 @@ const initialState = {
   movieIncludePriceList: localStorage.getItem("movieIncludePriceList")
     ? JSON.parse(localStorage.getItem("movieIncludePriceList"))
     : [],
-  onSellMovieList: [],
+  onSellMovieList: localStorage.getItem("movieInStore")
+    ? JSON.parse(localStorage.getItem("movieInStore"))
+    : [],
 };
 
 export const getAllMovies = createAsyncThunk(
@@ -102,15 +104,23 @@ const movieSlice = createSlice({
         return movie.id === id ? { ...movie, price: price } : movie;
       });
 
-      localStorage.setItem( "movieIncludePriceList", JSON.stringify(state.movieIncludePriceList)
-       
-       
+      localStorage.setItem(
+        "movieIncludePriceList",
+        JSON.stringify(state.movieIncludePriceList)
       );
     },
     addMovieToMarket: (state, action) => {
-      const { id } = action.payload;
-      state.onSellMovieList.push({ id: id });
-      localStorage.setItem("movieInStore", state.onSellMovieList);
+      const id = action.payload;
+      const existingMovie = state.onSellMovieList.find(
+        (item) => item.id === id
+      );
+      if (!existingMovie) {
+        state.onSellMovieList.push({ id: action.payload });
+        localStorage.setItem(
+          "movieInStore",
+          JSON.stringify(state.onSellMovieList)
+        );
+      }
     },
   },
 
