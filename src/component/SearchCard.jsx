@@ -2,10 +2,13 @@ import React, { useState } from "react";
 import StarIcon from "@mui/icons-material/Star";
 import HideImageIcon from "@mui/icons-material/HideImage";
 import { Link } from "react-router-dom";
+import { getMovieByKeyword } from "../storage/slices/movieSlice";
 const SearchCard = ({ movie }) => {
   const [imageUrl, setImageUrl] = useState(
     "https://www.themoviedb.org/t/p/w220_and_h330_face"
   );
+
+ 
 
   return (
     <Link to={`/movieInfo/${movie.id}`}>

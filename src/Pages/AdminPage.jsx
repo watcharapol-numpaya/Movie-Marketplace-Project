@@ -1,20 +1,35 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { addMovieToMarket, getAllMovies, updatePriceById } from "./../storage/slices/movieSlice";
+import {
+  addMovieToMarket,
+  getAllMovies,
+  getMovieByKeyword,
+  updatePriceById,
+} from "./../storage/slices/movieSlice";
 import MovieCard from "./../component/MovieCard";
+import AppPagination from "../component/AppPagination";
+import SearchCard from "../component/SearchCard";
+import SearchIcon from "@mui/icons-material/Search";
+import SearchBar from "../component/SearchBar";
 
 const AdminPage = () => {
   const dispatch = useDispatch();
-  const { allMovie } = useSelector((state) => state.movies);
+  const { allMovie, totalPages, searchList } = useSelector(
+    (state) => state.movies
+  );
   const [page, setPage] = useState(1);
   const [selectMovie, setSelectMovie] = useState(null);
   const [newPrice, setNewPrice] = useState(0);
+  const limitedTotalPages = totalPages > 500 ? 500 : totalPages;
+  const isSearch = searchList.length !== 0;
+  const showMovie = isSearch ? searchList : allMovie;
 
   useEffect(() => {
     handleGetMovie();
-  }, []);
+  }, [page]);
 
-  const handleGetMovie = (genre) => {
+  const handleGetMovie = () => {
+    console.log(page);
     let data = { page: page };
 
     dispatch(getAllMovies(data));
@@ -29,24 +44,9 @@ const AdminPage = () => {
     dispatch(updatePriceById(data));
   };
 
-  const handleAddNewMovie = (e) => {
-    e.preventDefault();
-
-    if (text) {
-      const newTodo = {
-        id: uuidv4(),
-        todo: text,
-        isFinish:false
-      };
-      setTodoList([...todoList, newTodo]);
-      setText("");
-    }
+  const handleAddMovieToMarket = () => {
+    dispatch(addMovieToMarket(selectMovie.id));
   };
-
-const handleAddMovieToMarket = ()=>{
-  console.log(selectMovie.id)
-  dispatch(addMovieToMarket(selectMovie.id))
-}
 
   const renderMovieEditSection = () => {
     return (
@@ -74,8 +74,13 @@ const handleAddMovieToMarket = ()=>{
           >
             UPDATE
           </button>
-        </div>  
-        <button onClick={handleAddMovieToMarket} className="bg-green-600 p-2 px-4 rounded-full my-4 hover:bg-green-800  shadow-sm">Add To Store</button>
+        </div>
+        <button
+          onClick={handleAddMovieToMarket}
+          className="bg-green-600 p-2 px-4 rounded-full my-4 hover:bg-green-800  shadow-sm"
+        >
+          Add To Store
+        </button>
       </div>
     );
   };
@@ -84,18 +89,49 @@ const handleAddMovieToMarket = ()=>{
     setSelectMovie(movieId);
   };
 
+  const renderSearch = () => {
+    return (
+      <div className="relative flex shadow-ทก rounded-full overflow-hidden">
+        <input className="h-10 w-80   outline-none p-4 pr-12    " />
+        <div className="h-10 w-12   absolute right-0 rounded-r-full flex justify-center items-center    ">
+          <SearchIcon className=" " />
+        </div>
+      </div>
+    );
+  };
+
   const renderMovie = () => {
     return (
-      <div className="flex flex-wrap justify-around gap-3 py-4">
-        {allMovie &&
-          allMovie.map((movie) => (
-            <MovieCard
-              key={movie.id}
-              movie={movie}
-              onSelectMovie={handleSelectMovie}
+      <div className=" ">
+        <div
+          className={`flex  ${
+            isSearch ? " justify-end" : "  justify-between"
+          }   pt-4  px-4`}
+        >
+          <div className={`${isSearch ? "hidden" : ""}`}>
+            <AppPagination
+              setPage={setPage}
+              page={page}
+              numberOfPage={limitedTotalPages}
             />
-          ))}
-               
+          </div>
+          <div className="shadow-sm border border-black">
+            <SearchBar />
+          </div>
+
+          {/* {renderSearch()} */}
+        </div>
+
+        <div className="flex flex-wrap justify-around gap-3 py-4">
+          {showMovie &&
+            showMovie.map((movie) => (
+              <MovieCard
+                key={movie.id}
+                movie={movie}
+                onSelectMovie={handleSelectMovie}
+              />
+            ))}
+        </div>
       </div>
     );
   };
@@ -109,9 +145,7 @@ const handleAddMovieToMarket = ()=>{
           <div className="w-2/6 bg-gray-200  ">
             <p className="px-4 text-lg uppercase font-bold pt-4">Edit Form</p>
             {selectMovie !== null ? renderMovieEditSection() : ""}
-       
           </div>
-          
         </div>
       </div>
     );

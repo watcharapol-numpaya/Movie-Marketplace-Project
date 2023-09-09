@@ -100,6 +100,13 @@ const movieSlice = createSlice({
         state.movieIncludePriceList.push({ id: id, price: price });
       }
 
+      //need to check searchList first
+      if (state.searchList.length !== 0) {
+        state.searchList = state.searchList.map((movie) => {
+          return movie.id === id ? { ...movie, price: price } : movie;
+        });
+      }
+
       state.allMovie = state.allMovie.map((movie) => {
         return movie.id === id ? { ...movie, price: price } : movie;
       });
@@ -155,7 +162,17 @@ const movieSlice = createSlice({
       })
       .addCase(getMovieByKeyword.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.searchList = action.payload;
+        state.searchList = action.payload.map((movie) => {
+          const priceItem = state.movieIncludePriceList.find(
+            (item) => item.id === movie.id
+          );
+          return {
+            ...movie,
+            price: priceItem ? priceItem.price : 0,
+          };
+        });
+
+        state.isLoading = false;
         state.isSuccess = true;
       })
       .addCase(getMovieByKeyword.rejected, (state, action) => {
