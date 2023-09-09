@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  addMovieToMarket,
+  addMovieToIdMarket,
   getAllMovies,
   getMovieByKeyword,
   updatePriceById,
@@ -44,8 +44,8 @@ const AdminPage = () => {
     dispatch(updatePriceById(data));
   };
 
-  const handleAddMovieToMarket = () => {
-    dispatch(addMovieToMarket(selectMovie.id));
+  const handleAddMovieToIdMarket = () => {
+    dispatch(addMovieToIdMarket(selectMovie.id));
   };
 
   const renderMovieEditSection = () => {
@@ -76,7 +76,7 @@ const AdminPage = () => {
           </button>
         </div>
         <button
-          onClick={handleAddMovieToMarket}
+          onClick={handleAddMovieToIdMarket}
           className="bg-green-600 p-2 px-4 rounded-full my-4 hover:bg-green-800  shadow-sm"
         >
           Add To Store
@@ -125,11 +125,13 @@ const AdminPage = () => {
         <div className="flex flex-wrap justify-around gap-3 py-4">
           {showMovie &&
             showMovie.map((movie) => (
-              <MovieCard
-                key={movie.id}
-                movie={movie}
-                onSelectMovie={handleSelectMovie}
-              />
+              <React.Fragment key={movie.id}>
+                <MovieCard
+                  key={movie.id}
+                  movie={movie}
+                  onSelectMovie={handleSelectMovie}
+                />
+              </React.Fragment>
             ))}
         </div>
       </div>

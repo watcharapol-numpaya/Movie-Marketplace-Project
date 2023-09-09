@@ -16,9 +16,10 @@ const initialState = {
   movieIncludePriceList: localStorage.getItem("movieIncludePriceList")
     ? JSON.parse(localStorage.getItem("movieIncludePriceList"))
     : [],
-  onSellMovieList: localStorage.getItem("movieInStore")
+  onSellMovieIdList: localStorage.getItem("movieInStore")
     ? JSON.parse(localStorage.getItem("movieInStore"))
     : [],
+  onSellMovieList: [],
 };
 
 export const getAllMovies = createAsyncThunk(
@@ -67,7 +68,6 @@ export const getMovieDetailByID = createAsyncThunk(
       const res = await movieApiInstance.get(`movie/${id}`, {
         params: {
           api_key: APIKeyTMDB,
-          append_to_response: "videos",
         },
       });
 
@@ -116,19 +116,25 @@ const movieSlice = createSlice({
         JSON.stringify(state.movieIncludePriceList)
       );
     },
-    addMovieToMarket: (state, action) => {
+    addMovieToIdMarket: (state, action) => {
       const id = action.payload;
-      const existingMovie = state.onSellMovieList.find(
+      const existingMovie = state.onSellMovieIdList.find(
         (item) => item.id === id
       );
       if (!existingMovie) {
-        state.onSellMovieList.push({ id: action.payload });
+        state.onSellMovieIdList.push({ id: action.payload });
         localStorage.setItem(
           "movieInStore",
-          JSON.stringify(state.onSellMovieList)
+          JSON.stringify(state.onSellMovieIdList)
         );
       }
-    },
+    },addMovieToMarket:(state,action) =>{
+      const movieToAdd = action.payload;
+      //return true false
+      if (!state.onSellMovieList.some((movie) => movie.id === movieToAdd.id)) {
+        state.onSellMovieList.push(movieToAdd);
+      }
+    }
   },
 
   extraReducers: (builder) => {
@@ -195,6 +201,6 @@ const movieSlice = createSlice({
       });
   },
 });
-export const { setKeyword, clearKeyword, updatePriceById, addMovieToMarket } =
+export const { setKeyword, clearKeyword, updatePriceById, addMovieToIdMarket,addMovieToMarket } =
   movieSlice.actions;
 export default movieSlice.reducer;
