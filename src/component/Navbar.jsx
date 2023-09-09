@@ -1,12 +1,25 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import SearchIcon from "@mui/icons-material/Search";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import HomeIcon from "@mui/icons-material/Home";
 import SupervisorAccountIcon from "@mui/icons-material/SupervisorAccount";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import SearchBar from "./SearchBar";
+ 
 
 const Navbar = () => {
+  const location = useLocation();
+  const [currentPath, setCurrentPath] = useState(location.pathname);
+  const isAdminPage = currentPath==="/admin"?true:false
+
+ 
+
+  useEffect(() => {
+    setCurrentPath(location.pathname);
+  }, [location]);
+
+
+
   return (
     <div className="h-14 bg-blue-500">
       <div className="lg:container mx-auto">
@@ -16,8 +29,11 @@ const Navbar = () => {
               Movie Marketplace
             </p>
           </Link>
-          <div className="w-8/12 h-14   flex justify-center items-center  ">
+          <div className={`${isAdminPage?"hidden":""} w-8/12 h-14   flex justify-center items-center `} >
             <SearchBar/>
+          </div> 
+          <div className={`${isAdminPage?"":"hidden"} w-8/12 h-14 `} >
+          
           </div>
           <div className="w-2/12 h-14">
             <ul className="flex w-full h-full bg-red items-center cursor-pointer ">
