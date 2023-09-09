@@ -11,11 +11,11 @@ const Navbar = () => {
     <div className="h-14 bg-blue-500">
       <div className="lg:container mx-auto">
         <div className="flex">
-          <div className="w-2/12 h-14 flex items-center ">
+          <Link to="/home" className="w-2/12 h-14 flex items-center ">
             <p className="uppercase font-bold text-lg text-white cursor-default">
               Movie Marketplace
             </p>
-          </div>
+          </Link>
           <div className="w-8/12 h-14   flex justify-center items-center  ">
             <SearchBar/>
           </div>
@@ -36,7 +36,7 @@ const Navbar = () => {
                   Cart
                 </Link>
               </li>
-              <li className=" w-full h-full   hover:bg-blue-600">
+              <li className=" w-full h-full bg-red-400  hover:bg-red-600">
                 <Link to="/admin" className=" w-full h-full flex justify-center items-center">
                   <SupervisorAccountIcon />
                   Admin

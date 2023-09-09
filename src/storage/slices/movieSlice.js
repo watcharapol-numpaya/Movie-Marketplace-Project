@@ -4,10 +4,7 @@ import { movieApiInstance } from "../../services/movieApi";
 
 const initialState = {
   movies: [],
-  trendingMovies: [],
-  popularMovies: [],
   allMovie: [],
-  genres: [],
   movieByGenre: [],
   searchList: [],
   movieInfo: [],
@@ -15,21 +12,18 @@ const initialState = {
   isLoading: false,
   isSuccess: false,
   message: "",
-  selectedGenres: [],
   keyword: "",
+  movieIncludePriceList: [],
 };
- 
 
 export const getAllMovies = createAsyncThunk(
   "movieList/getAllMovie",
   async (data, { rejectWithValue }) => {
- 
     try {
-  
       const res = await movieApiInstance.get(`discover/movie`, {
-        params:{
+        params: {
           api_key: APIKeyTMDB,
-          page:data.page
+          page: data.page,
         },
       });
       // console.log(res.data);
@@ -42,8 +36,6 @@ export const getAllMovies = createAsyncThunk(
     }
   }
 );
-
- 
 
 export const getMovieByKeyword = createAsyncThunk(
   "movieList/getMovieByKeyword",
@@ -86,11 +78,21 @@ const movieSlice = createSlice({
   initialState,
   reducers: {
     setKeyword: (state, action) => {
-      state.keyword = action.payload
+      state.keyword = action.payload;
     },
-    clearKeyword:(state,action)=>{
-      state.keyword = ""
-    }
+    clearKeyword: (state, action) => {
+      state.keyword = "";
+    },
+    updatePriceById: (state, action) => {
+      const { id, price } = action.payload;
+      state.movieIncludePriceList.push({ id: id, price: price })
+      state.allMovie = state.allMovie.map((movie) => {
+        return movie.id === id ? { ...movie, price: price } : movie;
+      });
+
+      localStorage.setItem("movieIncludePriceList", JSON.stringify(state.movieIncludePriceList));  
+    
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -99,7 +101,10 @@ const movieSlice = createSlice({
       })
       .addCase(getAllMovies.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.allMovie = action.payload.movies;
+        state.allMovie = action.payload.movies.map((movie) => ({
+          ...movie,
+          price: 0,
+        }));
         state.totalPages = action.payload.totalPages;
         state.isSuccess = true;
       })
@@ -108,7 +113,7 @@ const movieSlice = createSlice({
         state.isLoading = false;
         state.isSuccess = false;
       })
- 
+
       .addCase(getMovieByKeyword.pending, (state, action) => {
         state.isLoading = true;
       })
@@ -137,5 +142,5 @@ const movieSlice = createSlice({
       });
   },
 });
-export const {setKeyword,clearKeyword} = movieSlice.actions
+export const { setKeyword, clearKeyword, updatePriceById } = movieSlice.actions;
 export default movieSlice.reducer;

@@ -34,7 +34,7 @@ const handleSelectMovie =()=>{
             {movie.title}
           </span>
           <div className="absolute  rounded-r-lg text-black bg-amber-400 h-8 w-16 left-0 bottom-24 flex items-center justify-center">
-            <span id="vote-point">฿1,000</span>
+            <span id="vote-point">฿{movie.price}</span>
           </div>
         </div>
   
