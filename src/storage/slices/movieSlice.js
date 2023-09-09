@@ -18,16 +18,18 @@ const initialState = {
   selectedGenres: [],
   keyword: "",
 };
+ 
 
 export const getAllMovies = createAsyncThunk(
   "movieList/getAllMovie",
   async (data, { rejectWithValue }) => {
+ 
     try {
-      
+  
       const res = await movieApiInstance.get(`discover/movie`, {
-        params: {
+        params:{
           api_key: APIKeyTMDB,
-          page: data.page ? data.page : 1,
+          page:data.page
         },
       });
       // console.log(res.data);
@@ -40,6 +42,8 @@ export const getAllMovies = createAsyncThunk(
     }
   }
 );
+
+ 
 
 export const getMovieByKeyword = createAsyncThunk(
   "movieList/getMovieByKeyword",
@@ -82,11 +86,11 @@ const movieSlice = createSlice({
   initialState,
   reducers: {
     setKeyword: (state, action) => {
-      state.keyword = action.payload;
+      state.keyword = action.payload
     },
-    clearKeyword: (state, action) => {
-      state.keyword = "";
-    },
+    clearKeyword:(state,action)=>{
+      state.keyword = ""
+    }
   },
   extraReducers: (builder) => {
     builder
@@ -104,7 +108,7 @@ const movieSlice = createSlice({
         state.isLoading = false;
         state.isSuccess = false;
       })
-
+ 
       .addCase(getMovieByKeyword.pending, (state, action) => {
         state.isLoading = true;
       })
@@ -133,5 +137,5 @@ const movieSlice = createSlice({
       });
   },
 });
-export const { setKeyword, clearKeyword } = movieSlice.actions;
+export const {setKeyword,clearKeyword} = movieSlice.actions
 export default movieSlice.reducer;

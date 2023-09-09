@@ -7,11 +7,11 @@ const HomePage = () => {
 
   useEffect(()=>{
     dispatch(getAllMovies())
-  })
+  },[])
 
   const renderHomePage = () => {
     
-    return <div></div>;
+    return <div className="xl:container mx-auto"></div>;
   };
 
   
