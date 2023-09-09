@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getAllMovies, updatePriceById } from "./../storage/slices/movieSlice";
+import { addMovieToMarket, getAllMovies, updatePriceById } from "./../storage/slices/movieSlice";
 import MovieCard from "./../component/MovieCard";
 
 const AdminPage = () => {
@@ -42,6 +42,12 @@ const AdminPage = () => {
       setText("");
     }
   };
+
+const handleAddMovieToMarket = ()=>{
+  console.log(selectMovie.id)
+  dispatch(addMovieToMarket(selectMovie.id))
+}
+
   const renderMovieEditSection = () => {
     return (
       <div className="p-4">
@@ -59,16 +65,17 @@ const AdminPage = () => {
           <input
             id="price"
             type="number"
-            className="outline-none h-8 rounded-full p-2 ml-2"
+            className="outline-none h-8 rounded-full p-2 ml-2 shadow-sm"
             onChange={handleSetPrice}
           />
           <button
             onClick={handleUpdatePrice}
-            className="h-8 ml-1 bg-red-200 p-1 px-2 font-medium rounded-full text-sm"
+            className="h-8 ml-1 bg-red-200 hover:bg-red-400 p-1 px-2 font-medium rounded-full text-sm  shadow-sm"
           >
             UPDATE
           </button>
-        </div>
+        </div>  
+        <button onClick={handleAddMovieToMarket} className="bg-green-600 p-2 px-4 rounded-full my-4 hover:bg-green-800  shadow-sm">Add To Store</button>
       </div>
     );
   };
@@ -88,6 +95,7 @@ const AdminPage = () => {
               onSelectMovie={handleSelectMovie}
             />
           ))}
+               
       </div>
     );
   };
@@ -96,12 +104,14 @@ const AdminPage = () => {
     return (
       <div className="xl:container mx-auto">
         {/* {console.log(allMovie)} */}
-        <div className="w-full flex  bg-red-200">
-          <div className="w-4/6 bg-green-200 h-full">{renderMovie()}</div>
-          <div className="w-2/6 bg-green-400  ">
+        <div className="w-full flex   ">
+          <div className="w-4/6  h-full">{renderMovie()}</div>
+          <div className="w-2/6 bg-gray-200  ">
             <p className="px-4 text-lg uppercase font-bold pt-4">Edit Form</p>
             {selectMovie !== null ? renderMovieEditSection() : ""}
+       
           </div>
+          
         </div>
       </div>
     );

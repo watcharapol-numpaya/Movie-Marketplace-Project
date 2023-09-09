@@ -13,7 +13,10 @@ const initialState = {
   isSuccess: false,
   message: "",
   keyword: "",
-  movieIncludePriceList: localStorage.getItem('movieIncludePriceList')?JSON.parse(localStorage.getItem('movieIncludePriceList')):[],
+  movieIncludePriceList: localStorage.getItem("movieIncludePriceList")
+    ? JSON.parse(localStorage.getItem("movieIncludePriceList"))
+    : [],
+  onSellMovieList: [],
 };
 
 export const getAllMovies = createAsyncThunk(
@@ -85,15 +88,32 @@ const movieSlice = createSlice({
     },
     updatePriceById: (state, action) => {
       const { id, price } = action.payload;
-      state.movieIncludePriceList.push({ id: id, price: price })
+      const existingMovie = state.movieIncludePriceList.find(
+        (item) => item.id === id
+      );
+
+      if (existingMovie) {
+        existingMovie.price = price;
+      } else {
+        state.movieIncludePriceList.push({ id: id, price: price });
+      }
+
       state.allMovie = state.allMovie.map((movie) => {
         return movie.id === id ? { ...movie, price: price } : movie;
       });
 
-      localStorage.setItem("movieIncludePriceList", JSON.stringify(state.movieIncludePriceList));  
-    
+      localStorage.setItem( "movieIncludePriceList", JSON.stringify(state.movieIncludePriceList)
+       
+       
+      );
+    },
+    addMovieToMarket: (state, action) => {
+      const { id } = action.payload;
+      state.onSellMovieList.push({ id: id });
+      localStorage.setItem("movieInStore", state.onSellMovieList);
     },
   },
+
   extraReducers: (builder) => {
     builder
       .addCase(getAllMovies.pending, (state, action) => {
@@ -102,7 +122,9 @@ const movieSlice = createSlice({
       .addCase(getAllMovies.fulfilled, (state, action) => {
         state.isLoading = false;
         state.allMovie = action.payload.movies.map((movie) => {
-          const priceItem = state.movieIncludePriceList.find(item => item.id === movie.id);
+          const priceItem = state.movieIncludePriceList.find(
+            (item) => item.id === movie.id
+          );
           return {
             ...movie,
             price: priceItem ? priceItem.price : 0,
@@ -111,7 +133,7 @@ const movieSlice = createSlice({
         state.totalPages = action.payload.totalPages;
         state.isSuccess = true;
       })
-      
+
       .addCase(getAllMovies.rejected, (state, action) => {
         state.message = action.payload;
         state.isLoading = false;
@@ -146,5 +168,6 @@ const movieSlice = createSlice({
       });
   },
 });
-export const { setKeyword, clearKeyword, updatePriceById } = movieSlice.actions;
+export const { setKeyword, clearKeyword, updatePriceById, addMovieToMarket } =
+  movieSlice.actions;
 export default movieSlice.reducer;
