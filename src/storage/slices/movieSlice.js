@@ -13,7 +13,7 @@ const initialState = {
   isSuccess: false,
   message: "",
   keyword: "",
-  movieIncludePriceList: [],
+  movieIncludePriceList: localStorage.getItem('movieIncludePriceList')?JSON.parse(localStorage.getItem('movieIncludePriceList')):[],
 };
 
 export const getAllMovies = createAsyncThunk(
@@ -101,13 +101,17 @@ const movieSlice = createSlice({
       })
       .addCase(getAllMovies.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.allMovie = action.payload.movies.map((movie) => ({
-          ...movie,
-          price: 0,
-        }));
+        state.allMovie = action.payload.movies.map((movie) => {
+          const priceItem = state.movieIncludePriceList.find(item => item.id === movie.id);
+          return {
+            ...movie,
+            price: priceItem ? priceItem.price : 0,
+          };
+        });
         state.totalPages = action.payload.totalPages;
         state.isSuccess = true;
       })
+      
       .addCase(getAllMovies.rejected, (state, action) => {
         state.message = action.payload;
         state.isLoading = false;
