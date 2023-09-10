@@ -36,7 +36,7 @@ const MarketMovieCard = ({ movie, onAddMovieToCart }) => {
         <div className="absolute  rounded-r-lg text-black bg-amber-400 h-8 w-16 left-0 bottom-24 flex items-center justify-center">
           <span id="vote-point">฿{movie.price}</span>
         </div>
-        <div className="absolute  rounded-l-lg text-black top-0 right-0 bg-green-400 hover:bg-green-600 p-1 " onClick={handleSelectMovie}>
+        <div className="absolute  rounded-l-lg rounded-tr-lg m-1 text-black top-0 right-0 bg-green-400 hover:bg-green-600 p-1 " onClick={handleSelectMovie}>
           <ShoppingCartIcon />
         </div>
       </div>

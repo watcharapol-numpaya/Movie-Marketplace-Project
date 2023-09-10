@@ -14,10 +14,12 @@ const CartPage = () => {
   );
   const numberOfItem = cartList.length;
   const discount = numberOfItem >= 3 ? (numberOfItem >= 5 ? 20 : 10) : 0;
+  const [totalPrice, setTotalPrice] = useState(0);
+  const [summaryPrice, setSummaryPrice] = useState(0);
 
   useEffect(() => {
-    sumPrice();
-  }, [discount]);
+    calculatePrice();
+  }, [discount,numberOfItem]);
 
   const handleRemoveItem = (cartItemId) => {
     dispatch(removeItemFromCart(cartItemId));
@@ -26,25 +28,37 @@ const CartPage = () => {
     dispatch(clearItemInCart());
   };
 
-  const sumPrice = () => {
+  const calculatePrice = () => {
     let sumPrice = 0;
     cartList.forEach((movie) => {
       sumPrice += parseInt(movie.price);
     });
+    const totalPrice = sumPrice;
+    setTotalPrice(totalPrice);
+
+    const summaryPrice = sumPrice-(sumPrice * (discount / 100));
+    setSummaryPrice(summaryPrice);
   };
 
   const renderOrderSummaryBar = () => {
     return (
-      <div className="p-2  ">
-        <p className="text-lg font-semibold">Order Summary</p>
-        <div id="details" className="bg-red-400 w-full pl-4">
-          {cartList &&
-            cartList.map((movie) => (
-              <div key={movie.cartItemId} className="flex">
-                <p>{movie.title}</p>
-                <p>{movie.price}</p>
-              </div>
-            ))}
+      <div className="p-2  w-full">
+        <p className="text-lg font-semibold ">Order Summary</p>
+
+        <div id="details" className="  w-full px-4 mt-4 font-medium ">
+          <div className="flex justify-between  w-full  ">
+            <p>Total Price </p>
+            <div>{totalPrice} ฿ </div>
+          </div>
+          <div className="flex justify-between  w-full   ">
+            <p>Discount </p>
+            <div>{discount}% </div>
+          </div>
+          <hr className="my-2" />
+          <div className="flex justify-between  w-full   ">
+            <p>Summary Price</p>
+            <div>{summaryPrice} ฿</div>
+          </div>
         </div>
       </div>
     );
