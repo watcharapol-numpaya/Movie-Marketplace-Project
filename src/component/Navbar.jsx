@@ -25,7 +25,7 @@ const Navbar = () => {
       <div className="lg:container mx-auto">
         <div className="flex">
           <Link to="/home" className="w-2/12 h-14 flex items-center ">
-            <p className="uppercase font-bold text-lg text-white cursor-default">
+            <p className="uppercase font-bold text-lg text-white cursor-pointer">
               Movie Marketplace
             </p>
           </Link>

@@ -1,26 +1,35 @@
 import React, { useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import CartCard from "../component/CartCard";
+import { removeItemFromCart } from "../storage/slices/cartSlice";
 
 const CartPage = () => {
+  const dispatch = useDispatch()
   const { cartList } = useSelector((state) => state.carts);
   const [imageUrl, setImageUrl] = useState(
     "https://www.themoviedb.org/t/p/w220_and_h330_face"
   );
+
+const handleRemoveItem = (cartItemId)=>{
+ 
+  dispatch(removeItemFromCart(cartItemId))
+}
+
 
   const renderCartPage = () => {
     const renderItemList = () => {
       return (
         <div className="space-y-1">
           {cartList &&
-            cartList.map((movie) => (
-              <React.Fragment key={movie.id}>
-                <CartCard movie={movie} />
+            cartList.map((movie,index) => (
+              <React.Fragment key={index}>
+                <CartCard movie={movie} onRemove={handleRemoveItem}/>
               </React.Fragment>
             ))}
         </div>
       );
     };
+
 
     return (
       <div className="xl:container mx-auto w-full h-full">

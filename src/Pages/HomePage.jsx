@@ -9,6 +9,7 @@ import MovieCard from "./../component/MovieCard";
 import MarketMovieCard from "../component/MarketMovieCard";
 import AppPagination from "./../component/AppPagination";
 import { addToCart } from "../storage/slices/cartSlice";
+import { v4 as uuidv4 } from 'uuid';
 
 const HomePage = () => {
   const {
@@ -43,6 +44,7 @@ const HomePage = () => {
   const handleAddToCart = (movie) => {
     const data = {
       id: movie.id,
+      cartItemId:uuidv4(),
       original_title: movie.original_title,
       poster_path: movie.poster_path,
       price: movie.price,

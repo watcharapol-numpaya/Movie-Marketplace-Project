@@ -2,10 +2,15 @@ import React, { useState } from "react";
 import ImageNotFound from "./ImageNotFound";
 import CancelIcon from "@mui/icons-material/Cancel";
 
-const CartCard = ({ movie }) => {
+const CartCard = ({ movie, onRemove }) => {
   const [imageUrl, setImageUrl] = useState(
     "https://www.themoviedb.org/t/p/w220_and_h330_face"
   );
+
+  const handleRemoveFromCart = () => {
+ 
+    onRemove(movie.cartItemId);
+  };
 
   return (
     <div className="flex justify-between w-full bg-white border-b border-gray-200 rounded-lg overflow-hidden">
@@ -23,14 +28,23 @@ const CartCard = ({ movie }) => {
         </div>
         <div id="info" className="mx-2   h-full">
           <p className="font-medium text-lg">{movie.original_title}</p>{" "}
-          <span className="text-base font-semibold">Price:</span>{" "}
+          <span className="text-base font-semibold">Price:</span>
           <span> {movie.price}</span>
         </div>
       </div>
-      <div className="  flex flex-col  p-2">
-        <button className="text-red-500" >
-          <CancelIcon fontSize="medium" />
-        </button>
+
+      <div className="flex p-2">
+        <div className="  flex flex-col-reverse w-40">
+          <div>
+            <span className="text-base font-semibold">Price:</span>
+            <span> {movie.price} ฿</span>
+          </div>
+        </div>
+        <div>
+          <button className="text-red-500" onClick={handleRemoveFromCart}>
+            <CancelIcon fontSize="medium" />
+          </button>
+        </div>
       </div>
     </div>
   );
