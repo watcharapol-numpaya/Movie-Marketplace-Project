@@ -8,6 +8,7 @@ import {
 import MovieCard from "./../component/MovieCard";
 import MarketMovieCard from "../component/MarketMovieCard";
 import AppPagination from "./../component/AppPagination";
+import { addToCart } from "../storage/slices/cartSlice";
 
 const HomePage = () => {
   const {
@@ -39,7 +40,15 @@ const HomePage = () => {
   //   });
   // };
 
-  const handleAddToCart = (movieId) => {
+  const handleAddToCart = (movie) => {
+    const data = {
+      id: movie.id,
+      original_title: movie.original_title,
+      backdrop_path: movie.backdrop_path,
+      price: movie.price,
+    };
+
+    dispatch(addToCart(data));
     //add to card
   };
 
@@ -56,7 +65,7 @@ const HomePage = () => {
   const renderMovie = () => {
     return (
       <div className="w-full ">
-        <div className={`${isSearch?"hidden":""} flex justify-center `} >
+        <div className={`${isSearch ? "hidden" : ""} flex justify-center `}>
           <AppPagination
             setPage={setPage}
             page={page}
@@ -69,7 +78,7 @@ const HomePage = () => {
               <React.Fragment key={movie.id}>
                 <MarketMovieCard
                   movie={movie}
-                  onSelectMovie={handleAddToCart}
+                  onAddMovieToCart={handleAddToCart}
                 />
               </React.Fragment>
             ))}

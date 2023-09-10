@@ -6,13 +6,13 @@ import ImageNotFound from "./ImageNotFound";
 import { useDispatch, useSelector } from "react-redux";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 
-const MarketMovieCard = ({ movie, onSelectMovie }) => {
+const MarketMovieCard = ({ movie, onAddMovieToCart }) => {
   const [imageUrl, setImageURL] = useState(
     "https://www.themoviedb.org/t/p/w780"
   );
 
   const handleSelectMovie = () => {
-    onSelectMovie(movie);
+    onAddMovieToCart(movie);
   };
 
   return (
@@ -36,7 +36,7 @@ const MarketMovieCard = ({ movie, onSelectMovie }) => {
         <div className="absolute  rounded-r-lg text-black bg-amber-400 h-8 w-16 left-0 bottom-24 flex items-center justify-center">
           <span id="vote-point">฿{movie.price}</span>
         </div>
-        <div className="absolute  rounded-l-lg text-black top-0 right-0 bg-green-400 p-1 ">
+        <div className="absolute  rounded-l-lg text-black top-0 right-0 bg-green-400 hover:bg-green-600 p-1 " onClick={handleSelectMovie}>
           <ShoppingCartIcon />
         </div>
       </div>

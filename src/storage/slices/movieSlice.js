@@ -111,9 +111,9 @@ const movieSlice = createSlice({
         return movie.id === id ? { ...movie, price: price } : movie;
       });
 
-      localStorage.setItem(
-        "movieIncludePriceList",
-        JSON.stringify(state.movieIncludePriceList)
+      localStorage.setItem(  "movieIncludePriceList",  JSON.stringify(state.movieIncludePriceList)
+      
+      
       );
     },
     addMovieToIdMarket: (state, action) => {
