@@ -41,7 +41,7 @@ const CartCard = ({ movie, onRemove }) => {
           </div>
         </div>
         <div>
-          <button className="text-red-500" onClick={handleRemoveFromCart}>
+          <button className=" text-gray-500 hover:text-red-500" onClick={handleRemoveFromCart}>
             <CancelIcon fontSize="medium" />
           </button>
         </div>
