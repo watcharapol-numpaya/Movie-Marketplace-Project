@@ -40,3 +40,6 @@
    ```
 
 5. Open your web browser and go to `http://localhost:5174/` to see your React application running.
+
+## Caution
+   !Not support responsive
