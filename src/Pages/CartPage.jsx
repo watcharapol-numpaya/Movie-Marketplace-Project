@@ -17,7 +17,36 @@ const CartPage = () => {
   const [totalPrice, setTotalPrice] = useState(0);
   const [summaryPrice, setSummaryPrice] = useState(0);
   const [showPopUp, setShowPopUp] = useState(false);
+  const [countdown, setCountdown] = useState(60); // 60 seconds
+  const [timerId, setTimerId] = useState(null);
 
+  useEffect(() => {
+    
+    if (!showPopUp) {
+      setCountdown(60);
+    }
+  }, [showPopUp]);
+
+  const startCountdown = () => {
+    // Start the countdown timer
+    const timer = setInterval(() => {
+      setCountdown((prevCountdown) => {
+        if (prevCountdown > 0) {
+          return prevCountdown - 1;
+        } else {
+ 
+          clearInterval(timer);
+          setTimerId(null);  
+          return prevCountdown;  
+        }
+      });
+    }, 1000);  
+
+    
+    setTimerId(timer);
+  };
+
+  
   useEffect(() => {
     calculatePrice();
   }, [discount, numberOfItem]);
@@ -42,7 +71,11 @@ const CartPage = () => {
   };
 
   const handleShowPopUp = () => {
+    if (timerId) {
+      clearInterval(timerId);
+    }
     setShowPopUp(true);
+    startCountdown()
   };
 
   const renderOrderSummaryBar = () => {
@@ -112,7 +145,7 @@ const CartPage = () => {
                   />
                 </div>
                 <p className="text-center">Ref:9999</p>
-                <p className="text-center">{""} s</p>
+                <p className="text-center">{countdown} s</p>
               </div>
             </div>
           </div>
