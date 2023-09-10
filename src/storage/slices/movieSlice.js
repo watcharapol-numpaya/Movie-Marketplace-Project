@@ -131,6 +131,9 @@ const movieSlice = createSlice({
     },addMovieToMarket:(state,action) =>{
       const movieToAdd = action.payload;
       //return true false
+
+
+      
       if (!state.onSellMovieList.some((movie) => movie.id === movieToAdd.id)) {
         state.onSellMovieList.push(movieToAdd);
       }
@@ -167,7 +170,6 @@ const movieSlice = createSlice({
         state.isLoading = true;
       })
       .addCase(getMovieByKeyword.fulfilled, (state, action) => {
-        state.isLoading = false;
         state.searchList = action.payload.map((movie) => {
           const priceItem = state.movieIncludePriceList.find(
             (item) => item.id === movie.id
