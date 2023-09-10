@@ -8,7 +8,6 @@ import {
 } from "./../storage/slices/movieSlice";
 import MovieCard from "./../component/MovieCard";
 import AppPagination from "../component/AppPagination";
-import SearchCard from "../component/SearchCard";
 import SearchIcon from "@mui/icons-material/Search";
 import SearchBar from "../component/SearchBar";
 

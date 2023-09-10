@@ -17,7 +17,7 @@ const MarketMovieCard = ({ movie, onAddMovieToCart }) => {
 
   return (
     <>
-      <div className="flex flex-col bg-white shadow-xl rounded-xl xsm:h-96 xsm:w-52  h-80  w-44   border-t border-gray-100 sm:hover:scale-105 p-2 relative cursor-pointer">
+      <div className="flex flex-col bg-white  shadow-xl rounded-xl xsm:h-96 xsm:w-52  h-80  w-44   border-t border-gray-100 sm:hover:scale-105 p-2 relative cursor-pointer">
         <div className="xsm:w-48 xsm:h-72 w-40 h-60  rounded-xl overflow-hidden  ">
           {movie.poster_path ? (
             <img

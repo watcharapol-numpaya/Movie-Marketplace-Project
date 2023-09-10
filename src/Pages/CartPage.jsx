@@ -17,7 +17,7 @@ const CartPage = () => {
   const [totalPrice, setTotalPrice] = useState(0);
   const [summaryPrice, setSummaryPrice] = useState(0);
   const [showPopUp, setShowPopUp] = useState(false);
-  const [countdown, setCountdown] = useState(60); // 60 seconds
+  const [countdown, setCountdown] = useState(60); 
   const [timerId, setTimerId] = useState(null);
 
   useEffect(() => {
@@ -28,7 +28,7 @@ const CartPage = () => {
   }, [showPopUp]);
 
   const startCountdown = () => {
-    // Start the countdown timer
+ 
     const timer = setInterval(() => {
       setCountdown((prevCountdown) => {
         if (prevCountdown > 0) {
@@ -74,8 +74,9 @@ const CartPage = () => {
     if (timerId) {
       clearInterval(timerId);
     }
-    setShowPopUp(true);
-    startCountdown()
+    if(numberOfItem!==0){   setShowPopUp(true);
+      startCountdown()}
+  
   };
 
   const renderOrderSummaryBar = () => {
@@ -171,7 +172,7 @@ const CartPage = () => {
     return (
       <div className="xl:container mx-auto w-full h-full">
         <div className="flex p-2  h-full">
-          <div className="bg-green-600 w-3/4 h-full  min-h-screen rounded-lg p-4  ">
+          <div className="bg-white shadow-lg  border  w-3/4 h-full  min-h-screen rounded-lg p-4  ">
             <div>
               <p className="text-xl font-semibold">My Cart</p>
               <div
@@ -190,7 +191,7 @@ const CartPage = () => {
 
             <div className="py-2">{renderItemList()}</div>
           </div>
-          <div className="bg-green-400 flex w-1/4 rounded-lg   ">
+          <div className=" bg-white shadow-lg  border flex w-1/4 rounded-lg   ">
             {renderOrderSummaryBar()}
           </div>
         </div>

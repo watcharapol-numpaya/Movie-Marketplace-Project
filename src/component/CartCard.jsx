@@ -13,7 +13,7 @@ const CartCard = ({ movie, onRemove }) => {
   };
 
   return (
-    <div className="flex justify-between w-full bg-white border-b border-gray-200 rounded-lg overflow-hidden">
+    <div className="flex shadow-md border justify-between w-full bg-white border-b border-gray-200 rounded-lg overflow-hidden">
       <div className="flex items-center h-44 p-2   ">
         <div className="w-28 h-40  rounded-lg overflow-hidden">
           {movie.poster_path ? (
