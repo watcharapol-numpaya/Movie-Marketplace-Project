@@ -27,7 +27,7 @@ const CartCard = ({ movie, onRemove }) => {
           )}
         </div>
         <div id="info" className="mx-2   h-full">
-          <p className="font-medium text-lg">{movie.original_title}</p>{" "}
+          <p className="font-medium text-lg">{movie.title}</p>{" "}
           <span className="text-base font-semibold">Price:</span>
           <span> {movie.price}</span>
         </div>

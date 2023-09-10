@@ -45,7 +45,7 @@ const HomePage = () => {
     const data = {
       id: movie.id,
       cartItemId:uuidv4(),
-      original_title: movie.original_title,
+      title:movie.title,
       poster_path: movie.poster_path,
       price: movie.price,
     };
