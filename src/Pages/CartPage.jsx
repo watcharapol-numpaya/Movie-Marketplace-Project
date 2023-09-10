@@ -81,7 +81,7 @@ const CartPage = () => {
 
   const renderOrderSummaryBar = () => {
     return (
-      <div className="p-2  w-full">
+      <div className="p-4  w-full">
         <p className="text-lg font-semibold ">Order Summary</p>
 
         <div id="details" className="  w-full px-4 mt-4 font-medium ">
@@ -95,7 +95,7 @@ const CartPage = () => {
           </div>
           <hr className="my-2" />
           <div className="flex justify-between  w-full   ">
-            <p>Summary Price</p>
+            <p>Net Price</p>
             <div>{summaryPrice} ฿</div>
           </div>
           <hr className="my-2" />

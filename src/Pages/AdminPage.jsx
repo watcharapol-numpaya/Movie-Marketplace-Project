@@ -118,7 +118,7 @@ const AdminPage = () => {
             <SearchBar />
           </div>
 
-          {/* {renderSearch()} */}
+    
         </div>
 
         <div className="flex flex-wrap justify-around gap-3 py-4">
