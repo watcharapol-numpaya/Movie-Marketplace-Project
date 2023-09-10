@@ -44,7 +44,7 @@ const HomePage = () => {
     const data = {
       id: movie.id,
       original_title: movie.original_title,
-      backdrop_path: movie.backdrop_path,
+      poster_path: movie.poster_path,
       price: movie.price,
     };
 

@@ -12,10 +12,9 @@ const SearchBar = () => {
     dispatch(getMovieByKeyword(e.target.value))
   }
   
-
+ 
   return (
     <div className="relative flex shadow-sm rounded-full overflow-hidden">
-      {/* {console.log(currentPath)} */}
       <input onChange={handleSearch} className="h-10 w-80   outline-none p-4 pr-12 " />
       <div className="h-10 w-12   absolute right-0 rounded-r-full flex justify-center items-center    ">
         <SearchIcon className=" " />
