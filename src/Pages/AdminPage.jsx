@@ -28,7 +28,6 @@ const AdminPage = () => {
   }, [page]);
 
   const handleGetMovie = () => {
-    console.log(page);
     let data = { page: page };
 
     dispatch(getAllMovies(data));
@@ -64,12 +63,12 @@ const AdminPage = () => {
           <input
             id="price"
             type="number"
-            className="outline-none h-8 rounded-full p-2 ml-2 shadow-sm"
+            className="outline-none h-8 rounded-full p-2 ml-2 shadow-sm border"
             onChange={handleSetPrice}
           />
           <button
             onClick={handleUpdatePrice}
-            className="h-8 ml-1 bg-red-200 hover:bg-red-400 p-1 px-2 font-medium rounded-full text-sm  shadow-sm"
+            className="h-8 ml-1 bg-yellow-300 hover:bg-yellow-400 p-1 px-2 font-medium rounded-full text-sm  shadow-sm"
           >
             UPDATE
           </button>
@@ -134,7 +133,7 @@ const AdminPage = () => {
         {/* {console.log(allMovie)} */}
         <div className="w-full flex   ">
           <div className="w-4/6  h-full">{renderMovie()}</div>
-          <div className="w-2/6 bg-gray-200  ">
+          <div className="w-2/6 border m-2 shadow-lg rounded-lg ">
             <p className="px-4 text-lg uppercase font-bold pt-4">Edit Form</p>
             {selectMovie !== null ? renderMovieEditSection() : ""}
           </div>
