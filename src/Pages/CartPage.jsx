@@ -1,7 +1,10 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import CartCard from "../component/CartCard";
-import { clearItemInCart, removeItemFromCart } from "../storage/slices/cartSlice";
+import {
+  clearItemInCart,
+  removeItemFromCart,
+} from "../storage/slices/cartSlice";
 
 const CartPage = () => {
   const dispatch = useDispatch();
@@ -9,6 +12,12 @@ const CartPage = () => {
   const [imageUrl, setImageUrl] = useState(
     "https://www.themoviedb.org/t/p/w220_and_h330_face"
   );
+  const numberOfItem = cartList.length;
+  const discount = numberOfItem >= 3 ? (numberOfItem >= 5 ? 20 : 10) : 0;
+
+  useEffect(() => {
+    sumPrice();
+  }, [discount]);
 
   const handleRemoveItem = (cartItemId) => {
     dispatch(removeItemFromCart(cartItemId));
@@ -17,13 +26,37 @@ const CartPage = () => {
     dispatch(clearItemInCart());
   };
 
+  const sumPrice = () => {
+    let sumPrice = 0;
+    cartList.forEach((movie) => {
+      sumPrice += parseInt(movie.price);
+    });
+  };
+
+  const renderOrderSummaryBar = () => {
+    return (
+      <div className="p-2  ">
+        <p className="text-lg font-semibold">Order Summary</p>
+        <div id="details" className="bg-red-400 w-full pl-4">
+          {cartList &&
+            cartList.map((movie) => (
+              <div key={movie.cartItemId} className="flex">
+                <p>{movie.title}</p>
+                <p>{movie.price}</p>
+              </div>
+            ))}
+        </div>
+      </div>
+    );
+  };
+
   const renderCartPage = () => {
     const renderItemList = () => {
       return (
         <div className="space-y-1">
           {cartList &&
-            cartList.map((movie, index) => (
-              <React.Fragment key={index}>
+            cartList.map((movie) => (
+              <React.Fragment key={movie.cartItemId}>
                 <CartCard movie={movie} onRemove={handleRemoveItem} />
               </React.Fragment>
             ))}
@@ -37,7 +70,11 @@ const CartPage = () => {
           <div className="bg-green-600 w-3/4 h-full  min-h-screen rounded-lg p-4  ">
             <div>
               <p className="text-xl font-semibold">My Cart</p>
-              <div className={`${cartList.length!==0?"":"hidden"} w-full flex justify-end`}  >
+              <div
+                className={`${
+                  cartList.length !== 0 ? "" : "hidden"
+                } w-full flex justify-end`}
+              >
                 <button
                   onClick={handleClearAllItem}
                   className="bg-yellow-500 p-1 px-2 rounded-full text-base font-semibold"
@@ -49,7 +86,9 @@ const CartPage = () => {
 
             <div className="py-2">{renderItemList()}</div>
           </div>
-          <div className="bg-green-400 flex w-1/4    rounded-lg   "></div>
+          <div className="bg-green-400 flex w-1/4 rounded-lg   ">
+            {renderOrderSummaryBar()}
+          </div>
         </div>
       </div>
     );
