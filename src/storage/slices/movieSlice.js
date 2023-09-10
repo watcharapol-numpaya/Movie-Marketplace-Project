@@ -153,7 +153,7 @@ const movieSlice = createSlice({
           );
           return {
             ...movie,
-            price: priceItem ? priceItem.price : 0,
+            price: priceItem ? priceItem.price : 120,
           };
         });
         state.totalPages = action.payload.totalPages;
@@ -176,7 +176,7 @@ const movieSlice = createSlice({
           );
           return {
             ...movie,
-            price: priceItem ? priceItem.price : 0,
+            price: priceItem ? priceItem.price : 120,
           };
         });
 

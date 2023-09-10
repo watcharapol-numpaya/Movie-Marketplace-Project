@@ -48,7 +48,6 @@ const HomePage = () => {
   }, [page]);
 
   const handleGetMovie = () => {
-    console.log(page);
     let data = { page: page };
 
     dispatch(getAllMovies(data));
@@ -57,7 +56,7 @@ const HomePage = () => {
   const renderMovie = () => {
     return (
       <div className="w-full ">
-        <div className="flex justify-center">
+        <div className={`${isSearch?"hidden":""} flex justify-center `} >
           <AppPagination
             setPage={setPage}
             page={page}
@@ -65,8 +64,8 @@ const HomePage = () => {
           />
         </div>
         <div className="flex flex-wrap justify-center p-4 gap-6">
-          {allMovie &&
-            allMovie.map((movie) => (
+          {showMovie &&
+            showMovie.map((movie) => (
               <React.Fragment key={movie.id}>
                 <MarketMovieCard
                   movie={movie}
