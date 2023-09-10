@@ -5,20 +5,17 @@ import HomeIcon from "@mui/icons-material/Home";
 import SupervisorAccountIcon from "@mui/icons-material/SupervisorAccount";
 import { Link, useLocation } from "react-router-dom";
 import SearchBar from "./SearchBar";
- 
+import { useSelector } from "react-redux";
 
 const Navbar = () => {
   const location = useLocation();
   const [currentPath, setCurrentPath] = useState(location.pathname);
-  const isAdminPage = currentPath==="/admin"?true:false
-
- 
+  const isAdminPage = currentPath === "/admin" ? true : false;
+  const { cartList } = useSelector((state) => state.carts);
 
   useEffect(() => {
     setCurrentPath(location.pathname);
   }, [location]);
-
-
 
   return (
     <div className="h-14 bg-blue-500">
@@ -29,31 +26,46 @@ const Navbar = () => {
               Movie Marketplace
             </p>
           </Link>
-          <div className={`${isAdminPage?"hidden":""} w-8/12 h-14   flex justify-center items-center `} >
-            <SearchBar/>
-          </div> 
-          <div className={`${isAdminPage?"":"hidden"} w-8/12 h-14 `} >
-          
+          <div
+            className={`${
+              isAdminPage ? "hidden" : ""
+            } w-8/12 h-14   flex justify-center items-center `}
+          >
+            <SearchBar />
           </div>
+          <div className={`${isAdminPage ? "" : "hidden"} w-8/12 h-14 `}></div>
           <div className="w-2/12 h-14">
             <ul className="flex w-full h-full bg-red items-center cursor-pointer ">
               <li className=" w-full h-full   hover:bg-blue-600">
-                <Link to="/home" className=" w-full h-full flex justify-center items-center">
+                <Link
+                  to="/home"
+                  className=" w-full h-full flex justify-center items-center"
+                >
                   <HomeIcon />
                   Home
                 </Link>
               </li>
               <li className=" w-full h-full   hover:bg-blue-600">
-                <Link to="/cart" className=" w-full h-full flex justify-center items-center relative">
-                  <p className="absolute top-0 right-1 bg-yellow-400 rounded-full px-1 text-sm">
-                    20
-                  </p>
+                <Link
+                  to="/cart"
+                  className=" w-full h-full flex justify-center items-center relative"
+                >
+                  {cartList.length ? (
+                    <p className="absolute top-0 right-1 bg-yellow-400 rounded-full px-1 text-sm">
+                      {cartList.length}
+                    </p>
+                  ) : (
+                    ""
+                  )}
                   <ShoppingCartIcon />
                   Cart
                 </Link>
               </li>
               <li className=" w-full h-full bg-red-400  hover:bg-red-600">
-                <Link to="/admin" className=" w-full h-full flex justify-center items-center">
+                <Link
+                  to="/admin"
+                  className=" w-full h-full flex justify-center items-center"
+                >
                   <SupervisorAccountIcon />
                   Admin
                 </Link>
